@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clock-api
+  namespace: hypertheory
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: clock-api
+  template:
+    metadata:
+      labels:
+        app: clock-api
+    spec:
+      containers:
+      - name: clock-api
+        image: jeffrygonzalez/bsd-feb-2024-businessclockapi:v1.1
+        env:
+          - name: TZ
+            value: "America/New_York"
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080

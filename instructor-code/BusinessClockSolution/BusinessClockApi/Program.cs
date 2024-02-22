@@ -1,7 +1,29 @@
 using BusinessClockApi.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 
 var builder = WebApplication.CreateBuilder(args); // Hey, Microsoft, create me a 
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(b => b.AddService("business-clock-api"))
+    .WithTracing(b =>
+    {
+        b.AddAspNetCoreInstrumentation();
+        b.AddHttpClientInstrumentation();
+        b.AddZipkinExporter();
+        b.AddHttpClientInstrumentation();
+        b.AddConsoleExporter();
+        b.SetSampler(new AlwaysOnSampler());
+    })
+    .WithMetrics(opts =>
+    {
+        opts.AddPrometheusExporter();
+        opts.AddHttpClientInstrumentation();
+        opts.AddRuntimeInstrumentation();
+        opts.AddAspNetCoreInstrumentation();
+    });
 // api with the basic configuration you think would be a good starting place.
 
 builder.Services.AddEndpointsApiExplorer();
@@ -53,6 +75,7 @@ app.MapGet("/support-info", ([FromServices] IProvideTheBusinessClock clock) =>
     }
 });
 
+app.MapPrometheusScrapingEndpoint();
 app.Run();
 
 

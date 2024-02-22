@@ -16,8 +16,6 @@ public class IssuesController(IDocumentSession session, ILogger<IssuesController
             request.Description, DateTimeOffset.Now, IssueStatus.Pending);
         session.Insert(response);
         await session.SaveChangesAsync();
-        var support = await api.GetCurrentSupportInformationAsync();
-
         var model = new IssueResponseModel()
         {
             Id = response.Id,
@@ -25,8 +23,21 @@ public class IssuesController(IDocumentSession session, ILogger<IssuesController
             Description = response.Description,
             Logged = response.Logged,
             Status = response.Status,
-            Support = new SupportResponse(support.Name, support.Phone)
+
         };
+        SupportResponse? support = null;
+        try
+        {
+            support = await api.GetCurrentSupportInformationAsync();
+        }
+        catch (Exception)
+        {
+            return Ok(model);
+
+        }
+
+        model = model with { Support = new SupportResponse(support?.Name, support.Phone) };
+
 
 
         return Ok(model);
