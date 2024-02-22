@@ -1,0 +1,25 @@
+@IssueTrackerApi_HostAddress = http://localhost:1338
+
+GET {{IssueTrackerApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+POST {{IssueTrackerApi_HostAddress}}/issues
+Accept: application/json
+Content-Type: application/json
+
+{
+  "software": "oh dubya 3",
+  "description": "extra bad game!"
+}
+
+###
+ 
+GET {{IssueTrackerApi_HostAddress}}/issues
+Accept: application/json
+
+###
+ 
+GET {{IssueTrackerApi_HostAddress}}/issues/3fe0c622-670d-49b2-9c99-f095c5d03146
+Accept: application/json

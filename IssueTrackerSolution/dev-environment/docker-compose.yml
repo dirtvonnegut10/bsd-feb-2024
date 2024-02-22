@@ -1,0 +1,30 @@
+services:
+  clock-api:
+    image: jeffrygonzalez/bsd-feb-2024-businessclockapi:v1.1
+    restart: always
+    environment:
+      - TZ=America/New_York
+    ports:
+      - 1338:8080
+  db:
+    image: postgres:16.2-bullseye
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5439:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 9090:8080
+    environment:
+      ADMINER_DESIGN: dracula
+volumes:
+  db_data:
