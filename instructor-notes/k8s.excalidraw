@@ -1545,8 +1545,8 @@
     },
     {
       "type": "rectangle",
-      "version": 23,
-      "versionNonce": 1085353652,
+      "version": 27,
+      "versionNonce": 590706199,
       "isDeleted": false,
       "id": "qjSmfWf55zu6NierxXuhn",
       "fillStyle": "solid",
@@ -1555,7 +1555,7 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 387.848313715402,
+      "x": 395.848313715402,
       "y": 2625.218067467585,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
@@ -1568,7 +1568,7 @@
         "type": 3
       },
       "boundElements": [],
-      "updated": 1708636244365,
+      "updated": 1708637302264,
       "link": null,
       "locked": false
     },
